@@ -1,10 +1,11 @@
 {
   pkgs,
   lib,
-
   baseNeovimPackage ? pkgs.neovim-unwrapped,
-  extraPackages ? [],
   plugins ? [],
+  extraPackages ? [],
+  init ? null,
+  configDir ? null
 }:
 
 let
@@ -16,20 +17,23 @@ let
   # on the passed in `extraLuaPackages` attribute and everything else is passed
   # straight, but I guess the idea is that in the future it might abstract more
   # complex configuration without wrapping the program yet.
+  # TODO: Figure out why withPython3 and withRuby are true by default? It
+  # doesn't seem like they do anything special compared to the other off by
+  # default providers. Maybe disable them.
+  nullOr = n: v: if n == null then n else v;
+
   neovimConfig = pkgs.neovimUtils.makeNeovimConfig {
-    customLuaRC = ../init.lua;
+    inherit plugins;
+    ${nullOr init "customLuaRC"} = init;
     vimAlias = true;
     viAlias = true;
-    # TODO: Figure out why withPython3 and withRuby are true by default? It
-    # doesn't seem like they do anything special compared to the other off by
-    # default providers. Maybe disable them.
   };
 
+  # Concat extraPackages from plugins with general extraPackages, then join em
+  # all in one derivation for easy organization and to prevent bloating rtp.
+  # Duplicate packages just overwrite themselves witht their own file path so no issue there.
+  # Might technically get weird if multiple different packages have the same file paths.
   pluginExtraPackages = builtins.concatMap (p: p.extraPackages or []) plugins;
-
-  # Might get weird if you have package with duplicate paths (e.g. two different
-  # versions of the same package), seems like packages later in 'paths' overwrite
-  # already existing paths of older ones.
   joinedExtraPackages = pkgs.symlinkJoin {
     name = "extra-neovim-packages";
     paths = extraPackages ++ pluginExtraPackages;
@@ -43,11 +47,11 @@ let
         "PATH"
         ":"
         "${lib.makeBinPath [ joinedExtraPackages ]}"
-        
+
         "--add-flags"
-        "--cmd 'set rtp^=${./..}'"
+        "${nullOr configDir "--cmd 'set rtp^=${configDir}'"}"
       ];
     }
   );
-in 
+in
   wrappedNeovim
