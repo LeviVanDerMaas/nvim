@@ -1,7 +1,7 @@
-{ pkgs, ... }@args:
+{ pkgs, pluginsOnly }:
 
 let
-  nvimWithPlugins = (import ./packages.nix args).pluginsOnly;
+  nvimWithPlugins = pluginsOnly;
 in
 {
   default = pkgs.mkShell {
@@ -18,7 +18,7 @@ in
 
     packages = with pkgs; [
       (writeShellScriptBin "nvimd" ''
-        ${nvimWithPlugins} -u --clean "$NVIM_DEV_CONFIG/init.lua" --cmd "set rtp^=$NVIM_DEV_CONFIG" $@
+        ${nvimWithPlugins}/bin/nvim -u --clean "$NVIM_DEV_CONFIG/init.lua" --cmd "set rtp^=$NVIM_DEV_CONFIG" $@
       '')
     ];
   };
