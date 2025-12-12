@@ -2,11 +2,13 @@
 vim.keymap.set('', '<leader>h',
   function ()
     if vim.v.hlsearch == 0 then
-      vim.o.hlsearch = true -- Setting this also sets v:hlsearch to 1.
+    -- Setting this also sets v:hlsearch to 1.
+      vim.o.hlsearch = true
     else
-      vim.v.hlsearch = 0 -- Disable highlights but not 'hlsearch' option
+      -- Disable highlights but not 'hlsearch' option
+      vim.v.hlsearch = 0
     end
-  end, 
+  end,
   { silent = true; desc = 'Toggle search highlights' }
 )
 
@@ -39,4 +41,3 @@ vim.keymap.set({'v', 'o'}, 'ia',
   end,
   { silent = true, desc = '[a]ll, trim blank lines' }
 )
-

@@ -9,9 +9,10 @@
       lib = nixpkgs.lib;
 
       flakePkgs = import ./nix/packages.nix pkgs;
+      inherit (flakePkgs) callFlakePackage;
     in
     {
       packages.${arch} = flakePkgs;
-      devShells.${arch} = flakePkgs.callFlakePackage ./nix/devshells.nix {};
+      devShells.${arch} = callFlakePackage ./nix/devshells.nix {};
     };
 }

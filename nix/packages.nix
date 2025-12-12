@@ -47,7 +47,7 @@ let
     default = mkNvim { inherit init configDir plugins; };
     pluginsOnly = mkNvim { inherit plugins; };
 
-    callFlakePackage = lib.callPackageWith (pkgs // flakePkgs);
+    callFlakePackage = lib.callPackageWith (pkgs // { inherit flakePkgs; });
   };
 in
 flakePkgs
