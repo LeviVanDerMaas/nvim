@@ -27,20 +27,35 @@ let
         paths = extraPackages ++ pluginExtraPackages;
       };
     in
-    pkgs.wrapNeovimUnstable baseNeovimPackage {
-      wrapperArgs = nvimPkgConfig.wrapperArgs ++ [
-        "--prefix"
-        "PATH"
-        ":"
-        "${lib.makeBinPath [ joinedExtraPackages ]}"
+    pkgs.wrapNeovimUnstable baseNeovimPackage (
+      nvimPkgConfig // {
+        wrapperArgs = nvimPkgConfig.wrapperArgs ++ [
+          "--prefix"
+          "PATH"
+          ":"
+          "${lib.makeBinPath [ joinedExtraPackages ]}"
 
-        "--add-flags"
-        "${if configDir == null then "" else "--cmd 'set rtp^=${configDir}'"}"
-      ];
-    };
+          "--add-flags"
+          "${if configDir == null then "" else "--cmd 'set rtp^=${configDir}'"}"
+        ];
+      }
+    );
 
-  configDir = ../.;
-  init = "${configDir}/init.lua";
+  # TODO: Maybe wanna use filter attribute to filter out unneeded paths like nix and flake
+  # But idk if this is worth it, since flakes are copied in full to the store anyway,
+  # the hash of this flake and the hash of this path will probably be the same, at which point
+  # we might as well not bother otherwise we just end up duplicating stuff to the store unnecesarily.
+  configDir = lib.cleanSourceWith {
+    name = "neovim-config";
+    src = lib.cleanSource ../.;
+    filter = p: t: !(lib.elem (baseNameOf p) [
+      ".gitignore"
+      "nix"
+      "flake.nix"
+      "flake.lock"
+    ]);
+  };
+  init = builtins.readFile "${configDir}/init.lua";
   plugins = import ./plugins.nix pkgs;
 
   flakePkgs = {
