@@ -1,9 +1,7 @@
 { pkgs, lib, ... }:
 
 let
-  mkNvim = import ./mkNvim.nix pkgs;
   plugins = import ./plugins.nix pkgs;
-
   init = builtins.readFile "${configDir}/init.lua";
   configDir = lib.cleanSourceWith {
     name = "neovim-config";
@@ -16,11 +14,13 @@ let
     ]);
   };
 
+  callFlakePackage = lib.callPackageWith (pkgs // { inherit flakePkgs; });
+  mkNvim = callFlakePackage ./mkNvim.nix {};
   flakePkgs = {
-    inherit mkNvim;
-    default = mkNvim { inherit init configDir plugins; };
-    pluginsOnly = mkNvim { inherit plugins; };
-    callFlakePackage = lib.callPackageWith (pkgs // { inherit flakePkgs; });
+    inherit callFlakePackage mkNvim;
+    full = callFlakePackage mkNvim { inherit init configDir plugins; };
+    default = flakePkgs.full;
+    pluginsOnly = callFlakePackage mkNvim { inherit plugins; };
   };
 in
 flakePkgs
