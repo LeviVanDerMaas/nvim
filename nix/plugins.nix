@@ -3,7 +3,15 @@
   # UI
   catppuccin-nvim # Theme; integrates with many plugins
 
-  # Telescope
+  # QUALITY OF LIFE
+  guess-indent-nvim # Heurstically set local expandtab,tabstop, softtabstop, shiftfwidth
+  which-key-nvim # Shows popups with available key bindings on short pause
+
+  # GIT INTEGRATION
+  vim-fugitive # Git interface for Vim (repo-level)
+  gitsigns-nvim # Deep buffer-level integration for Git
+
+  # TELESCOPE
   { 
     plugin = telescope-nvim;
     dependsOn = [
@@ -12,8 +20,16 @@
     ];
     extraPackages = [ 
       ripgrep # Recommended, and required for grep pickers
-      deviccons # Nerd font icons
+      nvim-web-devicons # Nerd font icons
       # fd is optional dep, but seems to be only used when rg is not available.
     ];
   }
+
+  # LSP etc.
+  {
+    # (Semi-)official LSP configurations for nvim. Does not provide lsps itself.
+    plugin = nvim-lspconfig;
+    extraPackages = [];
+  }
+  tiny-inline-diagnostic-nvim # Inline diagnostics plugin
 ]
