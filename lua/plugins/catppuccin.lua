@@ -11,6 +11,13 @@ require("catppuccin").setup {
   float = {
     transparent = true,
   },
+
+  integrations = {
+    indent_blankline = {
+      enabled = true,
+      colored_indent_levels = true
+    }
+  }
 }
 
 vim.cmd.colorscheme "catppuccin"
