@@ -41,22 +41,3 @@ km.set("v", "<Leader>gb", tsb.git_bcommits_range, { desc = "List range's git com
 km.set("n", "<Leader>gB", tsb.git_branches, { desc = "List [g]it [b]ranches" })
 km.set("n", "<Leader>gs", tsb.git_status, { desc = "List [g]it [s]tatus" })
 km.set("n", "<Leader>gS", tsb.git_stash, { desc = "List [g]it [s]tash" })
-
-return {
-  -- LSP pickers
-  on_lsp_attach = function()
-    km.set("n", "gd", tsb.lsp_definitions, { desc = "[G]oto reference [d]efintion" })
-    km.set("n", "gD", vim.lsp.buf.declaraton, { desc = "[G]oto reference [d]eclaration" })
-    km.set("n", "gri", tsb.lsp_implementations, { desc = "[G]oto [r]eference [i]mplementations" })
-    km.set("n", "grr", tsb.lsp_references, { desc = "[G]oto [r]efe[r]ences" })
-    km.set("n", "grc", tsb.lsp_incoming_calls, { desc = "[G]oto [r]eference [c]allers" })
-    km.set("n", "grC", tsb.lsp_outgoing_calls, { desc = "[G]oto [r]eference-[c]alled" })
-    km.set("n", "grt", tsb.lsp_type_definitions, { desc = "[G]oto [r]eference [t]ype" })
-    km.set("n", "gO", tsb.lsp_document_symbols, { desc = "[G]oto d[o]cument symbols" })
-    -- Compared to lsp_workspace_symbols, this one is non-blocking and updates query dynamically
-    km.set("n", "g<C-O>", tsb.lsp_dyamic_workspace_symbols, { desc = "[G]oto [w]orkspace symbols" })
-
-    km.set("n", "grn", vim.lsp.buf.rename, { desc = "[G]lobally [r]e[n]ame" })
-    km.set("n", "gra", vim.lsp.buf.code_action, { desc = "[G]et/[r]un code [a]ctions" })
-  end
-}

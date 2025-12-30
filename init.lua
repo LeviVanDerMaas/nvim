@@ -21,6 +21,9 @@ require "plugins.gitsigns"
 require "plugins.telescope"
 
 -- TREESITTER
+require "plugins.treesitter"
 
 -- LSP
+require "plugins.lsp"
+require "plugins.blink-cmp"
 require "plugins.fidget"
