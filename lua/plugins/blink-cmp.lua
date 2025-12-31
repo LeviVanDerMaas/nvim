@@ -3,7 +3,14 @@ require("blink.cmp").setup {
     -- Default sources to enable, can be a function for dynamics.
     default = {
       -- Builtin completion sources.
-      "lsp", "snippets", "buffer", "path",
+      "lazydev", "lsp", "snippets", "buffer", "path",
+    },
+    providers = {
+      lazydev = {
+        name = "LazyDev",
+        module = "lazydev.integrations.blink",
+        score_offset = 100 -- Makes lazydev completions higher prio
+      }
     }
   },
 

@@ -19,6 +19,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.keymap.set(mode or "n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
     end
 
+    -- Setup buffer keymaps
     lsp_km("gd", tsb.lsp_definitions, "[G]oto reference [d]efintion")
     lsp_km("gD", vim.lsp.buf.declaration, "[G]oto reference [d]eclaration")
     lsp_km("gri", tsb.lsp_implementations, "[G]oto [r]eference [i]mplementations")
@@ -29,7 +30,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     lsp_km("gO", tsb.lsp_document_symbols, "[G]oto d[o]cument symbols")
     -- Compared to lsp_workspace_symbols, this one is non-blocking and updates query dynamically
     lsp_km("g<C-O>", tsb.lsp_dynamic_workspace_symbols, "[G]oto [w]orkspace symbols")
-
     lsp_km("grn", vim.lsp.buf.rename, "[G]lobally [r]e[n]ame")
     lsp_km("gra", vim.lsp.buf.code_action, "[G]et/[r]un code [a]ctions")
   end

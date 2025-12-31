@@ -25,5 +25,6 @@ require "plugins.treesitter"
 
 -- LSP
 require "plugins.lsp"
+require "plugins.tiny-inline-diagnostic"
 require "plugins.blink-cmp"
 require "plugins.fidget"

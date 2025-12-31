@@ -32,8 +32,10 @@
     # `.withPlugins' or `.withAllGrammars` to make treesitter grammars
     # available. However that wraps each grammar as its own individual plugin,
     # which polutes Vim's runtimepath and the produced pack directory quite a
-    # bit and also makes parser lookup linear instead of constant.
-    # So instead we just symlink all parsers into a single plugin
+    # bit and also makes parser lookup linear instead of constant (e.g. using
+    # withAllGrammars actually adds upwards of 20ms to startuptime on my very
+    # beefy gaming PC even on an unnamed buffer, vs the below which has
+    # negligible overhead).
     plugin = nvim-treesitter;
     dependsOn = [
       (symlinkJoin {
@@ -47,7 +49,7 @@
   {
     plugin = nvim-lspconfig; # (Semi-)official LSP configurations for nvim. Does not provide lsps itself.
     dependsOn = [
-      # lazydev # Configure LuaLS for editing neovim config
+      lazydev-nvim # Configure LuaLS for editing neovim config
     ];
     extraPackages = [
       lua-language-server
@@ -55,5 +57,5 @@
   }
   blink-cmp # Comprehensive, batteries-included, neovim completion engine
   fidget-nvim # Adds corner-window with LSP (and optionally for other) notifications
-  tiny-inline-diagnostic-nvim # Inline diagnostics plugin
+  tiny-inline-diagnostic-nvim # Very neat inline diagnostics plugin
 ]
