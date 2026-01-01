@@ -8,6 +8,9 @@ let
     src = lib.cleanSource ../.;
     filter = p: t: !(lib.elem (baseNameOf p) [
       ".gitignore"
+      ".direnv"
+      ".envrc"
+      ".nvim.lua"
       "nix"
       "flake.nix"
       "flake.lock"
