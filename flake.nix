@@ -2,7 +2,7 @@
   description = "Neovim config flake with a devshell for iteration without rebuilds.";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-  outputs = { nixpkgs, ... }:
+  outputs = { self, nixpkgs, ... }:
     let
       arch = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${arch};
@@ -14,5 +14,9 @@
     {
       packages.${arch} = flakePkgs;
       devShells.${arch} = callFlakePackage ./nix/devshells.nix {};
+      homeManagerModules = {
+        levisNeovimConfig = import ./nix/hmModule.nix self;
+        default = self.homeManagerModules.levisNeovimConfig;
+      };
     };
 }

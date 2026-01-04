@@ -25,6 +25,7 @@ let
 
   nvimPkgConfig = pkgs.neovimUtils.makeNeovimConfig {
     ${if init == null then null else "customLuaRC"} = init;
+    wrapRc = init != null;
     plugins = lib.unique (flattenPlugins plugins);
     vimAlias = true;
     viAlias = true;
