@@ -24,7 +24,10 @@ vim.keymap.set('', '<leader>H',
 -- TEXT OBJECTS:
 vim.keymap.set({'v', 'o'}, 'aa',
   function()
-    vim.cmd [[normal! gg0vG$]]
+    vim.cmd [[
+      exec "normal! \e"
+      normal! gg0vG$
+    ]]
   end,
   { silent = true, desc = '[a]ll' }
 )

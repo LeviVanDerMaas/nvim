@@ -4,14 +4,17 @@
   default = pkgs.mkShell {
     name = "nvim-config-dev";
     shellHook = ''
-      echo "Setting exported variable NVIM_DEV_CONFIG to directory's git repo
+      export NVIM_DEV_CONFIG=$(git rev-parse --show-toplevel)
+
+      echo -e "\e[3;34m\
+      Setting exported variable NVIM_DEV_CONFIG to directory's git repo
       root. Run 'nvimd' to invoke nvim with VIMINIT set to, by default, run
       \$NVIM_DEV_CONFIG/init.lua and with 'runtimepath' prefixed with
       NVIM_DEV_CONFIG. This enables rapidly testing the config in
-      NVIM_DEV_CONFIG without having to rebuild the nix package."
-
-      export NVIM_DEV_CONFIG=$(git rev-parse --show-toplevel)
-      echo "NVIM_DEV_CONFIG=$NVIM_DEV_CONFIG"
+      NVIM_DEV_CONFIG without having to rebuild the nix package.
+      
+      NVIM_DEV_CONFIG=$NVIM_DEV_CONFIG
+      \e[m"
     '';
 
     packages = with pkgs; [

@@ -9,6 +9,8 @@ require "core.keymaps"
 
 -- QUALITY OF LIFE
 require "plugins.catppuccin"
+-- require "plugins.heirline"
+require "plugins.lualine"
 require "plugins.guess-indent"
 require "plugins.which-key"
 require "plugins.nvim-surround"
