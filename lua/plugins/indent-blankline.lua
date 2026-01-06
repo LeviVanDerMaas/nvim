@@ -1,3 +1,5 @@
+local hooks = require "ibl.hooks"
+
 local highlight = {
   "RainbowRed",
   "RainbowYellow",
@@ -7,22 +9,30 @@ local highlight = {
   "RainbowViolet",
   "RainbowCyan",
 }
-local hooks = require "ibl.hooks"
+-- We do this seperately instead of using a loop to ensure ordering.
+local highlight_defaults = {
+  RainbowRed = { fg = "#E06C75" },
+  RainbowYellow = { fg = "#E5C07B" },
+  RainbowBlue = { fg = "#61AFEF" },
+  RainbowOrange = { fg = "#D19A66" },
+  RainbowGreen = { fg = "#98C379" },
+  RainbowViolet = { fg = "#C678DD" },
+  RainbowCyan = { fg = "#56B6C2" }
+}
 
--- This sets up colored indent guides, it is inside a hook that triggers
--- just before the highlights are setup.
--- They are in the hook so they are recreated upon colorscheme changes.
--- In this case we have commented it out because we use the catppuccin
--- theme's integration to have these set instead.
--- hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
---     vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
---     vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
---     vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
---     vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
---     vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
---     vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
---     vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
--- end)
+-- Sets up default values for highlight groups that we use to color
+-- the highlights. This hook triggers just before highlights are setup,
+-- i.e. when the colorscheme is chagnged. By setting default values like
+-- these, we can integrate with other theme plugins without messing things
+-- up when a colorscheme does not provide these highlights.
+hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+  for _, hl in ipairs(highlight) do
+    local cur_hl = vim.api.nvim_get_hl(0, { name = hl })
+    if vim.tbl_isempty(cur_hl) then
+      vim.api.nvim_set_hl(0, hl, highlight_defaults[hl])
+    end
+  end
+end)
 
 -- Integrate multiline highlights with rainbow-delimers.nvim
 vim.g.rainbow_delimiters = {
@@ -31,8 +41,8 @@ vim.g.rainbow_delimiters = {
 
 require("ibl").setup {
   scope = {
+    -- Sets up colored indentation guides
     highlight = highlight
   }
 }
-
 hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)

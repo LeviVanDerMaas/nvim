@@ -8,7 +8,6 @@ require "core.options"
 require "core.keymaps"
 
 -- QUALITY OF LIFE
-require "plugins.catppuccin"
 require "plugins.heirline"
 -- require "plugins.lualine"
 require "plugins.guess-indent"
@@ -30,3 +29,6 @@ require "plugins.lsp"
 require "plugins.tiny-inline-diagnostic"
 require "plugins.blink-cmp"
 require "plugins.fidget"
+
+-- COLORSCHEME (prefer loading this late)
+require "plugins.catppuccin"
