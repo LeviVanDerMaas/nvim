@@ -12,7 +12,7 @@ end
 
 -- Config to run whenever an lsp attaches to a buffer.
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("plugin.lsp", { clear = true }),
+  group = vim.api.nvim_create_augroup("plugins.lsp", { clear = true }),
   callback = function (event)
     local tsb = require "telescope.builtin"
     local lsp_km = function (keys, func, desc, mode)
@@ -33,4 +33,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
     lsp_km("grn", vim.lsp.buf.rename, "[G]lobally [r]e[n]ame")
     lsp_km("gra", vim.lsp.buf.code_action, "[G]et/[r]un code [a]ctions")
   end
-})
+}) 

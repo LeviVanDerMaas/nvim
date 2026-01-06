@@ -3,7 +3,7 @@
   # QUALITY OF LIFE
   catppuccin-nvim # Theme; integrates with many plugins
   lualine-nvim
-  # heirline-nvim # Statusline utility API for generating format strings.
+  heirline-nvim # Statusline utility API for generating format strings.
   guess-indent-nvim # Heurstically set local expandtab, tabstop, softtabstop, shiftfwidth
   which-key-nvim # Shows popups with available key bindings on short pause
   nvim-surround # Operator-based insertion and manipulation of pairs like (), "", etc.
@@ -23,7 +23,7 @@
     ];
     extraPackages = [
       ripgrep # Recommended, and required for grep pickers
-      nvim-web-devicons # Nerd font icons
+      # nvim-web-devicons # Nerd font icons
       # fd is optional dep, but seems to be only used when rg is not available.
     ];
   }

@@ -1,4 +1,4 @@
--- vim.loader.enable() -- Enables module caching between sessions. Call ASAP.
+vim.loader.enable() -- Enables module caching between sessions. Call ASAP.
 
 -- Set these very early as keymaps expand <leader> upon definition
 vim.g.mapleader = " "
@@ -9,8 +9,8 @@ require "core.keymaps"
 
 -- QUALITY OF LIFE
 require "plugins.catppuccin"
--- require "plugins.heirline"
-require "plugins.lualine"
+require "plugins.heirline"
+-- require "plugins.lualine"
 require "plugins.guess-indent"
 require "plugins.which-key"
 require "plugins.nvim-surround"
