@@ -1,7 +1,9 @@
 local utils = require("heirline.utils")
+
+-- A table with basic, reusuable components for use with other components.
 return {
   Aligner = { provider = "%=" },
-  Space = { provider = " "},
+  Space = { provider = " " },
 
   -- Wraps component in an itemgroup as defined by `:h 'statusline'`.
   itemGroup = function (component, fields, color)
@@ -18,7 +20,6 @@ return {
       },
       "%)"
     }
-    print(vim.inspect(delimiters))
     return utils.surround(delimiters, color, component)
   end
 }
