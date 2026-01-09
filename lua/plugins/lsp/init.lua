@@ -33,4 +33,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
     lsp_km("grn", vim.lsp.buf.rename, "[G]lobally [r]e[n]ame")
     lsp_km("gra", vim.lsp.buf.code_action, "[G]et/[r]un code [a]ctions")
   end
-}) 
+})

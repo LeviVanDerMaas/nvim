@@ -1,8 +1,8 @@
 local utils = require "heirline.utils"
 
--- Can't use an __index metatable because heirline only copies values.
 -- With NONE we fallback to whatever highlights parent components set,
 -- or what the colorscheme itself has set (e.g. hi-StatusLine)
+-- Can't use an __index metatable because heirline only copies values.
 local default_colors = {
     mode_normal = "NONE",
     mode_visual = "NONE",
@@ -24,7 +24,7 @@ local function setup_colors()
 end
 
 vim.api.nvim_create_autocmd("ColorScheme", {
-  group = vim.api.nvim_create_augroup("plugins.heirline", {}),
+  group = vim.api.nvim_create_augroup("plugins.heirline", { clear = false }),
   callback = function ()
     utils.on_colorscheme(setup_colors)
   end

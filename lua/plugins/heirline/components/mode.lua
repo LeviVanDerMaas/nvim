@@ -17,67 +17,48 @@ local mode_names = {
     n = "NORMAL",
     v = "VISUAL",
     V = "V-LINE",
-    ["\22"] = "V-BLCK",
+    ["\22"] = "V-BLOCK",
     s = "SELECT",
     S = "S-LINE",
-    ["\19"] = "S-BLCK",
+    ["\19"] = "S-BLOCK",
     i = "INSERT",
-    R = "REPLCE",
-    c = "COMMND",
+    R = "REPLACE",
+    c = "COMMAND",
     r = "PROMPT",
-    ["!"] = "SHELL!",
-    t = "TRMNAL",
+    ["!"] = "SHELL",
+    t = "TERMINAL",
 
     -- Operator pending
-    no = "O-PEND",
+    no = "OPENDING",
 
     -- Ex mode
-    cv = "CMD-EX",
+    cv = "EX",
 
     -- Virtual replacement mode
     Rv = "R-VIRT",
 
     -- i_CTRL-O (i.e.temporary NORMAL mode)
-    niI = "I-NORM",
-    niR = "R-NORM",
-    niV = "R-NORM",
-    nt = "T-NORM",
+    niI = "I-NORMAL",
+    niR = "R-NORMAL",
+    niV = "R-NORMAL",
+    nt = "T-NORMAL",
 
     -- v_CTRL-O (i.e. temporary VISUAL mode)
-    vs = "V-SLCT",
-    Vs = "V-SLCT",
-    ["\22s"] = "V-SLCT",
+    vs = "V-SELECT",
+    Vs = "V-SELECT",
+    ["\22s"] = "V-SELECT",
 
     -- Completion modes
-    ic = "I-CMPL",
-    ix = "I-XCMP",
-    Rc = "R-CMPL",
-    Rx = "R-XCMP",
-    Rvc = "RV-CMP",
-    Rvx = "RV-XCP",
+    ic = "I-COMPL",
+    ix = "I-XCOMPL",
+    Rc = "R-COMPL",
+    Rx = "R-XCOMPL",
+    Rvc = "R-COMPL",
+    Rvx = "R-XCOMPL",
 }
 setmetatable(mode_names, { __index = mapLargestPrefix })
 
--- TODO: Change how this is setup so that it does not depend on catppuccin and
--- also offers means to change with the theme or fallback to defaults.
-local c_mocha = require("catppuccin.palettes").get_palette "mocha"
 local mode_colors = {
-  -- Base modes (single char)
-  -- n = c_mocha.blue,
-  -- v = c_mocha.mauve,
-  -- V = c_mocha.mauve,
-  -- ["\22"] = c_mocha.mauve,
-  -- s = c_mocha.pink,
-  -- S = c_mocha.pink,
-  -- ["\19"] = c_mocha.pink,
-  -- i = c_mocha.green,
-  -- R = c_mocha.red,
-  -- c = c_mocha.maroon,
-  -- r = c_mocha.maroon,
-  -- ["!"] = c_mocha.maroon,
-  -- t = c_mocha.sky,
-
-
   n = "mode_normal",
   v = "mode_visual",
   V = "mode_visual",
@@ -96,7 +77,12 @@ setmetatable(mode_colors, { __index = mapLargestPrefix })
 
 return {
   condition = require("heirline.conditions").is_active,
-  update = "ModeChanged", -- TODO: Look into why the cookbook recommends something more complex?
+  update = {
+    "ModeChanged",
+    -- Explicitly schedule redraw because O-PENDING does not trigger redraw by itself
+    -- Also some plugins may cause textlock for other modes (e.g. which-key for Visual-L/B).
+    callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
+  },
   init = function(self)
     self.mode = vim.fn.mode(1)
   end,
