@@ -4,6 +4,13 @@ local utils = require("heirline.utils")
 return {
   Aligner = { provider = "%=" },
   Space = { provider = " " },
+  Ruler = { provider = "%l:%c" },
+  BufferProgress = { provider = "%P" },
+
+  -- A component that's `n` spaces
+  spaces = function (n)
+    return { provider = string.rep(" ", n) }
+  end,
 
   -- Wraps component in an itemgroup as defined by `:h 'statusline'`.
   itemGroup = function (component, fields, color)

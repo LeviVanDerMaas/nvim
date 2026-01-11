@@ -1,16 +1,18 @@
 local basic = require "plugins.heirline.components.basic"
-
+local FileName = require "plugins.heirline.components.filename"
 local Mode = require "plugins.heirline.components.mode"
-local Filepath = { provider = "%f" }
 local BufsModified = require "plugins.heirline.components.bufs_modified"
 
 local StatusLine = {
   basic.Space,
   basic.itemGroup(Mode, { minwid = 8, ljustify = true }),
   basic.Space,
-  basic.itemGroup(BufsModified, { minwid = 4 } ),
+  basic.itemGroup(BufsModified, { minwid = 1 } ),
   basic.Space,
-  Filepath
+  FileName,
+  basic.Aligner,
+  basic.Ruler,
+  basic.BufferProgress
 }
 
 require("heirline").setup {
@@ -35,4 +37,4 @@ require("heirline").setup {
 -- until you leave COMMAND mode or explictly call :redrawstatus.
 -- Checking the source code of heirline, update works as follows:
 -- NOTE: If you get any erros from statusline on leaving use this:
---:au VimLeavePre * set stl=
+--    :au VimLeavePre * set stl=

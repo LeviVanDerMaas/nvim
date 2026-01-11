@@ -10,7 +10,7 @@ local default_colors = {
     mode_insert = "NONE",
     mode_replace = "NONE",
     mode_command = "NONE",
-    mode_terminal = "NONE"
+    mode_terminal = "NONE",
 
     modified_current = "NONE",
     modified_noncurrent = "NONE",
