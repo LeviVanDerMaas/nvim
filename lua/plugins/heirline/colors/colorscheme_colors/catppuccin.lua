@@ -8,8 +8,11 @@ return function (flavour)
     mode_visual = c.mauve,
     mode_select = c.pink,
     mode_insert = c.green,
-    mode_replace = c.red,
+    mode_replace = c.maroon,
     mode_command = c.peach,
-    mode_terminal = c.sky
+    mode_terminal = c.sky,
+
+    modified_current = c.red,
+    modified_noncurrent = c.yellow
   }
 end

@@ -11,6 +11,9 @@ local default_colors = {
     mode_replace = "NONE",
     mode_command = "NONE",
     mode_terminal = "NONE"
+
+    modified_current = "NONE",
+    modified_noncurrent = "NONE",
 }
 
 local function setup_colors()
