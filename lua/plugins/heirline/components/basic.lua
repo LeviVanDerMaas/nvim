@@ -4,7 +4,7 @@ local utils = require("heirline.utils")
 return {
   Aligner = { provider = "%=" },
   Space = { provider = " " },
-  Ruler = { provider = "%l:%c" },
+  Ruler = { provider = "%l:%c", hl = { fg = "ruler" } },
   BufferProgress = { provider = "%P" },
 
   -- A component that's `n` spaces

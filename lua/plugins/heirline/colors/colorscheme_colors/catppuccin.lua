@@ -13,6 +13,6 @@ return function (flavour)
     mode_terminal = c.sky,
 
     modified_current = c.red,
-    modified_noncurrent = c.yellow
+    modified_noncurrent = c.yellow,
   }
 end

@@ -77,25 +77,25 @@ vim.api.nvim_create_autocmd("BufUnload", {
 })
 
 return {
-  condition = function () return num_modified_cache > 0 end,
   {
-    condition = conditions.is_active,
+    condition = function ()
+      return conditions.is_active() and num_modified_cache > 0
+    end,
     provider = function ()
-      local modified = vim.bo.modified
       return table.concat {
         "[",
-        (num_modified_cache > 1 or not modified) and num_modified_cache or "",
-        modified and "+" or "",
+        (num_modified_cache > 1 or not vim.bo.modified) and num_modified_cache or "",
+        vim.bo.modified and "+" or "",
         "]"
       }
     end,
     hl = function ()
-      return { fg = vim.bo.modified and "modified_current" or "modified_noncurrent" }
+        return { fg = vim.bo.modified and "modified_current" or "modified_noncurrent" }
     end
   },
   {
     condition = conditions.is_not_active,
-    provider = function() 
+    provider = function()
       return vim.bo.modified and "[+]" or ""
     end
   }

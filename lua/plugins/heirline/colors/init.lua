@@ -4,16 +4,18 @@ local utils = require "heirline.utils"
 -- or what the colorscheme itself has set (e.g. hi-StatusLine)
 -- Can't use an __index metatable because heirline only copies values.
 local default_colors = {
-    mode_normal = "NONE",
-    mode_visual = "NONE",
-    mode_select = "NONE",
-    mode_insert = "NONE",
-    mode_replace = "NONE",
-    mode_command = "NONE",
-    mode_terminal = "NONE",
+  mode_normal = "NONE",
+  mode_visual = "NONE",
+  mode_select = "NONE",
+  mode_insert = "NONE",
+  mode_replace = "NONE",
+  mode_command = "NONE",
+  mode_terminal = "NONE",
 
-    modified_current = "NONE",
-    modified_noncurrent = "NONE",
+  modified_current = "NONE",
+  modified_noncurrent = "NONE",
+
+  ruler = "NONE",
 }
 
 local function setup_colors()
