@@ -55,6 +55,7 @@
     ];
     extraPackages = [
       lua-language-server
+      clang-tools # clangd
     ];
   }
   blink-cmp # Comprehensive, batteries-included, neovim completion engine

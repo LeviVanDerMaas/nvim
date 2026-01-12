@@ -4,7 +4,7 @@
 -- Call vim.lsp.enable to let LSPs auto attach to new buffers as configged.
 -- Call AFTER setting any LSP-specific config.
 -- vim.lsp.config("*", {}) -- Base config overriden even by lsp/<config.lua>
-local enabled_lsps = { "lua_ls" }
+local enabled_lsps = { "lua_ls", "clangd" }
 for _, v in ipairs(enabled_lsps) do
   pcall(require, "plugins.lsp." .. v)
   vim.lsp.enable(v)
