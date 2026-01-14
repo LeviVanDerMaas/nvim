@@ -1,16 +1,22 @@
--- :h nvim-treesitter-modules
--- External plugins are also configured here
-require("nvim-treesitter.configs").setup {
-  -- (Builtin) Let treesitter handle syntax highlighting
-  highlight = { enable = true },
+-- No need to call setup when using defaults. However, all treesitter features
+-- are disabled by default and must be manually enabled for each buffer. We
+-- just use a generic autocmd to make this work for all buffers. To check
+-- if a parser is actually available on the rtp, you can use
+-- vim.treesitter.language.add.
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function (args)
+    local lang = vim.treesitter.language.get_lang(args.match) or args.match
+    if vim.treesitter.language.add(lang) then
+      -- Enable treesitter-based highlighting
+      vim.treesitter.start()
 
-  -- (Builtin) Let treesitter handle indentation (including = operator)
-  indent = { enable = true },
+      -- Enable treesitter-based indentening
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
-  -- (Builtin) Enable incremental selection binds.
-  -- TODO: May want to look into nvim-treesitter-textobjects/context
-  -- as these seem more convenient and powerful.
-  incremental_selection = {
-    enable = true
-  }
-}
+      --Enable treesitter-based folding
+      -- vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+      -- vim.wo[0][0].foldmethod = 'expr'
+    end
+  end
+})
+
