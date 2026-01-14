@@ -29,23 +29,10 @@
   }
 
   # TREESITTER
-  {
-    # The nixpkgs reference manual recommends installing treesitter with
-    # `.withPlugins' or `.withAllGrammars` to make treesitter grammars
-    # available. However that wraps each grammar as its own individual plugin,
-    # which polutes Vim's runtimepath and the produced pack directory quite a
-    # bit and also makes parser lookup linear instead of constant (e.g. using
-    # withAllGrammars actually adds upwards of 20ms to startuptime on my very
-    # beefy gaming PC even on an unnamed buffer, vs the below which has
-    # negligible overhead).
-    plugin = nvim-treesitter;
-    dependsOn = [
-      (symlinkJoin {
-        name = "nvim-treesitter-parsers";
-        paths = lib.attrValues nvim-treesitter.grammarPlugins;
-      })
-    ];
-  }
+  # In the past, this package installed all grammars as seperate plugins,
+  # although more recently it seems to actually properly put them all under
+  # one `parser` dir (as a single plugin); keep an eye on it though.
+  nvim-treesitter.withAllGrammars
 
   # LSP
   {
