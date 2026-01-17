@@ -8,8 +8,8 @@ require "core.options"
 require "core.keymaps"
 
 -- QUALITY OF LIFE
--- require "plugins.heirline"
-require "plugins.lualine"
+require "plugins.heirline"
+-- require "plugins.lualine"
 require "plugins.guess-indent"
 require "plugins.which-key"
 require "plugins.nvim-surround"

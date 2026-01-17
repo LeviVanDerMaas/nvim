@@ -1,20 +1,68 @@
-local basic = require "plugins.heirline.components.basic"
+local basics = require "plugins.heirline.components.basics"
 local FileName = require "plugins.heirline.components.filename"
 local Mode = require "plugins.heirline.components.mode"
 local BufsModified = require "plugins.heirline.components.bufs_modified"
-
+local testx = { provider = "x", condition = function() return DOX end }
+local testy = { provider = "y", condition = function() return DOY end }
+local testz = { provider = "z", condition = function() return DOZ end }
+DOX = false
+DOY = false
+DOZ = false
 local StatusLine = {
-  basic.Space,
-  basic.itemGroup(Mode, { minwid = 8, ljustify = true }),
-  basic.Space,
-  basic.Ruler,
-  basic.Space,
-  basic.itemGroup(BufsModified, { minwid = 4 } ),
-  basic.Space,
+  basics.Space,
+  basics.itemGroup(Mode, { minwid = 8, ljustify = true }),
+  basics.Space,
+  basics.Ruler,
+  basics.Space,
+  basics.itemGroup(BufsModified, { minwid = 4 } ),
+  basics.Space,
   FileName,
-  basic.Aligner,
-  basic.Ruler,
-  basic.BufferProgress
+
+  basics.Aligner,
+  basics.separate({
+    testx,
+    testy,
+    testz
+  }, { provider = "_" }),
+
+  basics.Aligner,
+  basics.separate({
+    testx,
+    testy,
+    testz
+  }, { provider = "_" }, { leading = true }),
+
+  basics.Aligner,
+  basics.separate({
+    testx,
+    testy,
+    testz
+  }, { provider = "_" }, { trailing = true }),
+
+  basics.Aligner,
+  basics.separate({
+    testx,
+    testy,
+    testz
+  }, { provider = "_" }, { trailing = true, leading = true }),
+
+  basics.Aligner,
+  basics.separate({
+    testx,
+    testy,
+    testz
+  }, { provider = "_" }, { separator_on_empty = true }),
+
+  basics.Aligner,
+  basics.separate({
+    testx,
+    testy,
+    testz
+  }, { provider = "_" }, { leading = true, trailing = true, separator_on_empty = true }),
+
+  basics.Aligner,
+  basics.Ruler,
+  basics.BufferProgress
 }
 
 require("heirline").setup {
@@ -28,6 +76,7 @@ require("heirline").setup {
 -- that if you use any buffer-local values in your statusline provider, they will carry over to other
 -- buffers until the statusline is updated again (in other words be careful with a component's 'update'
 -- property when the provider uses buffer-local values).
+-- NOTE: Heirline values are "inherited" downwards, but writing does not go back up to the parent.
 -- NOTE: If update is set, a cache will be checked: if that cache is not nil, then the cache is used;
 -- otherwise the rest of the component is evaluated.
 --   # If update is a function, cache will be set to nil when function returns true
